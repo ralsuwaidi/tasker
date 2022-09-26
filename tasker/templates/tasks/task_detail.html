@@ -4,31 +4,15 @@
 {% block title %}Task List{% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container mb-3">
 
   <div class="row">
     <div class="col-sm-12">
 
       <h2>Task Detail</h2>
-
         <p>{{object.name}}</p>
- 
     </div>
   </div>
-
-{% if object == request.user %}
-<!-- Action buttons -->
-<div class="row">
-
-  <div class="col-sm-12">
-    <a class="btn btn-primary" href="{% url 'users:update' %}" role="button">My Info</a>
-    <a class="btn btn-primary" href="{% url 'account_email' %}" role="button">E-Mail</a>
-    <!-- Your Stuff: Custom user template urls -->
-  </div>
-
-</div>
-<!-- End Action buttons -->
-{% endif %}
 
 </div>
 {% endblock content %}

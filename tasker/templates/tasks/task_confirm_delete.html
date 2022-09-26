@@ -11,14 +11,10 @@
 
       <h2>Create Task</h2>
 
-      <form class="form-horizontal" method="post" action="">
-        {% csrf_token %}
-        {{ form|crispy }}
-        <div class="control-group">
-          <div class="controls">
-            <button type="submit" class="btn btn-primary">Create</button>
-          </div>
-        </div>
+      <form method="post">{% csrf_token %}
+        <p>Are you sure you want to delete the task?</p>
+        {{ form }}
+        <button type="submit" class="btn btn-primary">Delete</button>
       </form>
  
     </div>

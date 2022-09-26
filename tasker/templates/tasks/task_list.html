@@ -4,35 +4,34 @@
 {% block title %}Task List{% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container mb-3">
 
   <div class="row">
     <div class="col-sm-12">
 
       <h2>Task List</h2>
 
-        <div class="list-group">
+      <a class="btn btn-primary my-3" href="{% url 'tasks:create' %}" role="button">Create</a>
+
+
+      <ol class="list-group ">
           {% for task in object_list %}
-            <a href="{% url 'tasks:detail' task.id %}" class="list-group-item list-group-item-action">{{ task.name }}</a>
+          <li class="list-group-item d-flex justify-content-between align-items-start">
+          <div class="ms-2 me-auto">
+            <div class="fw-bold"><a href="{% url 'tasks:detail' task.id %}">{{ task.name }}</a></div>
+            {{ task.description }}
+          </div>
+            <div>
+              <a class="btn btn-primary" href="{% url 'tasks:update' task.id %}" role="button">Edit</a>
+              <a class="btn btn-primary" href="{% url 'tasks:delete' task.id %}" role="button">Delete</a>
+            </div>
+          </li>
           {% endfor %}
-        </div>
+        </ol>
+
  
     </div>
   </div>
-
-{% if object == request.user %}
-<!-- Action buttons -->
-<div class="row">
-
-  <div class="col-sm-12">
-    <a class="btn btn-primary" href="{% url 'users:update' %}" role="button">My Info</a>
-    <a class="btn btn-primary" href="{% url 'account_email' %}" role="button">E-Mail</a>
-    <!-- Your Stuff: Custom user template urls -->
-  </div>
-
-</div>
-<!-- End Action buttons -->
-{% endif %}
 
 </div>
 {% endblock content %}
