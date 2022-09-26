@@ -19,6 +19,9 @@
           <li class="list-group-item d-flex justify-content-between align-items-start">
           <div class="ms-2 me-auto">
             <div class="fw-bold"><a href="{% url 'tasks:detail' task.id %}">{{ task.name }}</a></div>
+            {% if task.responsible %}
+            <span class="badge bg-secondary">{{task.responsible}}</span>
+            {% endif %}
             {{ task.description }}
           </div>
             <div>
