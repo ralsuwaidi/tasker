@@ -21,7 +21,7 @@ class TaskDetailView(DetailView):
 task_detail_view = TaskDetailView.as_view()
 
 
-class TaskCreateView(CreateView, LoginRequiredMixin):
+class TaskCreateView(LoginRequiredMixin, CreateView):
     model = Task
     fields = '__all__'
 
@@ -35,7 +35,7 @@ class TaskCreateView(CreateView, LoginRequiredMixin):
 task_create_view = TaskCreateView.as_view()
 
 
-class TaskUpdateView(UpdateView, LoginRequiredMixin):
+class TaskUpdateView(LoginRequiredMixin, UpdateView):
     model = Task
     fields = '__all__'
     slug_field = "id"
@@ -50,7 +50,7 @@ class TaskUpdateView(UpdateView, LoginRequiredMixin):
 
 task_update_view = TaskUpdateView.as_view()
 
-class TaskDeleteView(DeleteView, LoginRequiredMixin):
+class TaskDeleteView(LoginRequiredMixin, DeleteView):
     model = Task
     slug_field = "id"
     slug_url_kwarg = "id"
