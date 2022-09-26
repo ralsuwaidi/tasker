@@ -1,0 +1,7 @@
+# PostgreSQL
+# ------------------------------------------------------------------------------
+POSTGRES_HOST=postgres
+POSTGRES_PORT=5432
+POSTGRES_DB=tasker
+POSTGRES_USER=dALQRbxvILNLETJJNHLbbUufpjORkJrM
+POSTGRES_PASSWORD=z8G90yOdHHq0CToooZXJ38GMEyQ1j6mJAzbekAI1ZvAIyeXc6rvye8dVudie5kvK
