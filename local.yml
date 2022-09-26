@@ -1,5 +1,7 @@
 version: '3'
 
+# https://cookiecutter-django.readthedocs.io/en/latest/developing-locally-docker.html
+
 volumes:
   tasker_local_postgres_data: {}
   tasker_local_postgres_data_backups: {}
