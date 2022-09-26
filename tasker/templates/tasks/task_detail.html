@@ -9,9 +9,25 @@
   <div class="row">
     <div class="col-sm-12">
 
-      <h2>Task Detail</h2>
-        <p>{{object.name}}</p>
+      <h2>Task: {{object.name}}</h2>
+      <a class="btn btn-primary my-3" href="{% url 'tasks:update' object.id %}" role="button">Edit</a>
+      <ul class="list-group">
+        <li class="list-group-item">Name: {{ object.name }}</li>
+        <li class="list-group-item">{{ object.description|linebreaks }}</li>
+        {% if object.responsible %}
+        <li class="list-group-item">Assigned to: {{ object.responsible }}</li>
+        {% endif %}
+        <li class="list-group-item">Completed: {{ object.is_completed }}</li>
+        {% if object.deadline %}
+        <li class="list-group-item">Deadline: {{ object.deadline }}</li>
+        {% else %}
+        <li class="list-group-item">Deadline: There is no deadline</li>
+        {% endif %}
+      </ul>
     </div>
+
+
+
   </div>
 
 </div>

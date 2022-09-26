@@ -22,7 +22,7 @@
             {% if task.responsible %}
             <span class="badge bg-secondary">{{task.responsible}}</span>
             {% endif %}
-            {{ task.description }}
+            {{ task.description|truncatechars:50 }}
           </div>
             <div>
               <a class="btn btn-primary" href="{% url 'tasks:update' task.id %}" role="button">Edit</a>

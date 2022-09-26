@@ -28,7 +28,8 @@ class Task(models.Model):
     deadline = models.DateField(
         _("Due date"),
         null=True,
-        blank=True
+        blank=True,
+        help_text=_("Example: 02-12-1994")
     )
     
     # auto generated fields
