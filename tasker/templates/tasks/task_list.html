@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Task List{% endblock %}
+
+{% block content %}
+<div class="container">
+
+  <div class="row">
+    <div class="col-sm-12">
+
+      <h2>Task List</h2>
+
+        <div class="list-group">
+          {% for task in object_list %}
+            <a href="{% url 'tasks:detail' task.id %}" class="list-group-item list-group-item-action">{{ task.name }}</a>
+          {% endfor %}
+        </div>
+ 
+    </div>
+  </div>
+
+{% if object == request.user %}
+<!-- Action buttons -->
+<div class="row">
+
+  <div class="col-sm-12">
+    <a class="btn btn-primary" href="{% url 'users:update' %}" role="button">My Info</a>
+    <a class="btn btn-primary" href="{% url 'account_email' %}" role="button">E-Mail</a>
+    <!-- Your Stuff: Custom user template urls -->
+  </div>
+
+</div>
+<!-- End Action buttons -->
+{% endif %}
+
+</div>
+{% endblock content %}

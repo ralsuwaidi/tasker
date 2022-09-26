@@ -75,6 +75,7 @@ THIRD_PARTY_APPS = [
 
 LOCAL_APPS = [
     "tasker.users",
+    "tasker.tasks",
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
