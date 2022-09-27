@@ -1,6 +1,14 @@
-from django.urls import reverse
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse
+from django.views.generic import (
+    CreateView,
+    DeleteView,
+    DetailView,
+    ListView,
+    UpdateView,
+)
+
+from tasker.tasks.forms import TaskCreateForm
 
 from .models import Task
 
@@ -23,7 +31,7 @@ task_detail_view = TaskDetailView.as_view()
 
 class TaskCreateView(LoginRequiredMixin, CreateView):
     model = Task
-    fields = '__all__'
+    form_class = TaskCreateForm
 
     def get_success_url(self):
         assert (
@@ -31,13 +39,17 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
         )  # for mypy to know that the user is authenticated
         return reverse('tasks:list')
 
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
+
 
 task_create_view = TaskCreateView.as_view()
 
 
 class TaskUpdateView(LoginRequiredMixin, UpdateView):
     model = Task
-    fields = '__all__'
+    form_class = TaskCreateForm
     slug_field = "id"
     slug_url_kwarg = "id"
 
