@@ -15,24 +15,46 @@
 
 
       <ol class="list-group ">
-          {% for task in object_list %}
+        {% for task in object_list %}
+          {% if not task.is_private %}
           <li class="list-group-item d-flex justify-content-between align-items-start">
-          <div class="ms-2 me-auto">
-            <div class="fw-bold"><a href="{% url 'tasks:detail' task.id %}">{{ task.name }}</a></div>
-            {% if task.responsible %}
-            <span class="badge bg-secondary">{{task.responsible}}</span>
-            {% endif %}
-            {{ task.description|truncatechars:50 }}
-          </div>
+            <div class="ms-2 me-auto">
+              <div class="fw-bold"><a href="{% url 'tasks:detail' task.id %}">{{ task.name }}</a></div>
+              {% if task.responsible %}
+              <span class="badge bg-secondary">{{task.responsible}}</span>
+              {% endif %}
+              {{ task.description|truncatechars:50 }}
+            </div>
             <div>
               <a class="btn btn-primary" href="{% url 'tasks:update' task.id %}" role="button">Edit</a>
               <a class="btn btn-primary" href="{% url 'tasks:delete' task.id %}" role="button">Delete</a>
             </div>
           </li>
-          {% endfor %}
-        </ol>
+          {% else %}
+            {% if user.is_authenticated %}
+              {% if task.responsible == user or task.created_by == user %}
+              <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                  <div class="fw-bold"><a href="{% url 'tasks:detail' task.id %}">{{ task.name }}</a></div>
+                  {% if task.responsible %}
+                  <span class="badge bg-secondary">{{task.responsible}}</span>
+                  {% endif %}
+                  (hidden) {{ task.description|truncatechars:50 }}
+                </div>
+                <div>
+                  <a class="btn btn-primary" href="{% url 'tasks:update' task.id %}" role="button">Edit</a>
+                  <a class="btn btn-primary" href="{% url 'tasks:delete' task.id %}" role="button">Delete</a>
+                </div>
+              </li>
+              {% endif %}
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+      </ol>
 
- 
+
+
+
     </div>
   </div>
 

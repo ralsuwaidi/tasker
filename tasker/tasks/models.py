@@ -30,16 +30,16 @@ class Task(models.Model):
         default=False,
         help_text=_("Is the task completed?")
     )
+    is_private = models.BooleanField(
+        _("private"),
+        default=False,
+        help_text=_("Hide the task so only the owner and the assignee can view it")
+    )
     deadline = models.DateField(
         _("Due date"),
         null=True,
         blank=True,
         help_text=_("Example: mm/dd/yyyy")
-    )
-    is_private: models.BooleanField(
-        _("private"),
-        default=False,
-        help_text=_("Hide the task so only the owner and the assignee can view it")
     )
     
     # auto generated fields
