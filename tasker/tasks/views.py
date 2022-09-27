@@ -1,5 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
+from django_filters.views import FilterView
+from .filters import TaskFilter
 from django.views.generic import (
     CreateView,
     DeleteView,
@@ -13,8 +15,11 @@ from tasker.tasks.forms import TaskCreateForm
 from .models import Task
 
 
-class TaskListView(ListView):
+class TaskListView(FilterView):
     model = Task
+    context_object_name = 'task_list'
+    template_name = 'tasks/task_list.html'
+    filterset_class = TaskFilter
 
 
 task_list_view = TaskListView.as_view()

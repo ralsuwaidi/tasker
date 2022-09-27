@@ -9,6 +9,19 @@ class Task(models.Model):
     A general task that can be assigned to a user.
     """
 
+    NEW = 'NW'
+    QUE = 'QU'
+    PROGRESS = 'PR'
+    REVIEW = 'RE'
+    COMPLETED = 'CO'
+    TASK_STAGE = [
+        (NEW, 'New'),
+        (QUE, 'In Que'),
+        (PROGRESS, 'In Progress'),
+        (REVIEW, 'Under Review'),
+        (COMPLETED, 'Completed'),
+    ]
+
     name = models.CharField(
         _("name"), 
         max_length=150, 
@@ -40,6 +53,11 @@ class Task(models.Model):
         null=True,
         blank=True,
         help_text=_("Example: mm/dd/yyyy")
+    )
+    task_stage = models.CharField(
+        max_length=2,
+        choices=TASK_STAGE,
+        default=NEW,
     )
     
     # auto generated fields
