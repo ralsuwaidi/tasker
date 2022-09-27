@@ -27,9 +27,34 @@
       </ul>
     </div>
 
+  </div>
+
+  <a class="btn btn-primary my-3" href="{% url 'tasks:update_create' object.id %}" role="button">Add Update</a>
+
+  {% if object.update_set.count > 0 %}
+  <div class=" mt-2 mb-5">
+    <div class="row">
+      <div class="col-md-6">
+        <h4>Updates</h4>
+        <ul class="timeline">
+          {% for update in object.update_set.all|dictsortreversed:"created_at" %}
+          <li>
+            <a target="_blank" href="https://www.totoprayogo.com/#">{{object.created_by.username}}</a>
+            <p class="float-right">{{update.created_at}}</p>
+            <p>{{update.comment}}</p>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+  {% endif %}
 
 
   </div>
 
-</div>
+
+
 {% endblock content %}
+
+

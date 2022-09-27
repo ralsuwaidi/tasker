@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from tasker.tasks.models import Task
+from tasker.tasks.models import Task, Update
 
 class TaskCreateForm(ModelForm):
     class Meta:
@@ -7,4 +7,7 @@ class TaskCreateForm(ModelForm):
         exclude = ('created_by',)
 
 
-
+class UpdateCreateForm(ModelForm):
+    class Meta:
+        model = Update
+        fields = ['file', 'comment']

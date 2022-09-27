@@ -1,17 +1,13 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
+from django.views.generic import CreateView, DeleteView, DetailView, UpdateView
 from django_filters.views import FilterView
+
+from tasker.tasks.forms import TaskCreateForm, UpdateCreateForm
+
 from .filters import TaskFilter
-from django.views.generic import (
-    CreateView,
-    DeleteView,
-    DetailView,
-    ListView,
-    UpdateView,
-)
-
-from tasker.tasks.forms import TaskCreateForm
-
 from .models import Task
 
 
@@ -80,3 +76,22 @@ class TaskDeleteView(LoginRequiredMixin, DeleteView):
 
 
 task_delete_view = TaskDeleteView.as_view()
+
+@login_required
+def update_create_view(request, task_id):
+    # get the current task instance 
+    task = get_object_or_404(Task, pk=task_id)
+    # if this is a POST request we need to process the form data
+    if request.method == 'POST':
+        form = UpdateCreateForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            update = form.save(commit=False)
+            update.created_by = request.user
+            update.task = task
+            update.save()
+            return redirect('tasks:detail', id=task.pk)
+    
+    form = UpdateCreateForm()
+    return render(request, "tasks/update_form.html", {"form": form})

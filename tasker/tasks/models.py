@@ -1,8 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from django.contrib.auth import get_user_model
 
-User = get_user_model()
 
 class Task(models.Model):
     """
@@ -36,32 +34,56 @@ class Task(models.Model):
         on_delete=models.CASCADE,
         blank=True,
         null=True,
-        related_name="task_responsible"
-    )
+        related_name="task_responsible")
     is_completed = models.BooleanField(
         _("completed"),
         default=False,
-        help_text=_("Is the task completed?")
-    )
+        help_text=_("Is the task completed?"))
     is_private = models.BooleanField(
         _("private"),
         default=False,
-        help_text=_("Hide the task so only the owner and the assignee can view it")
-    )
+        help_text=_("Hide the task so only the owner and the assignee can view it"))
     deadline = models.DateField(
         _("Due date"),
         null=True,
         blank=True,
-        help_text=_("Example: mm/dd/yyyy")
-    )
+        help_text=_("Example: mm/dd/yyyy"))
     task_stage = models.CharField(
         max_length=2,
         choices=TASK_STAGE,
-        default=NEW,
-    )
+        default=NEW,)
     
     # auto generated fields
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     # form auto saves current logged in user
     created_by = models.ForeignKey('users.User', on_delete=models.CASCADE, related_name="task_creator")
+
+
+def task_directory_path(instance, filename):
+    # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+    return 'task_{0}/{1}'.format(instance.task.id, filename)
+
+
+class Update(models.Model):
+    """
+    A generic model that is attached to every task.
+
+    It can be 
+    * a file upload
+    * a comment
+    * TODO: mention (soon)
+    * TODO: task change
+    * TODO: multiple files
+    """
+
+    file = models.FileField(_("Supporting file"), upload_to=task_directory_path, null=True, blank=True)
+    comment = models.TextField(_("Comment"),
+    blank=True,
+    null=True,
+    help_text=_("Add a comment"))
+    task = models.ForeignKey('tasks.Task', on_delete=models.CASCADE)
+
+    # auto gen field
+    created_at = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey('users.User', on_delete=models.CASCADE,)
