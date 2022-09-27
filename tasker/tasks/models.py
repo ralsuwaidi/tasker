@@ -29,7 +29,7 @@ class Task(models.Model):
         _("Due date"),
         null=True,
         blank=True,
-        help_text=_("Example: 02/12/1994")
+        help_text=_("Example: mm/dd/yyyy")
     )
     
     # auto generated fields
