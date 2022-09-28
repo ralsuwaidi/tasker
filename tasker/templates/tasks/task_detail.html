@@ -5,7 +5,12 @@
 
 {% block content %}
 <div class="container mb-3">
-
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'tasks:list' %}">Tasks</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Task</li>
+    </ol>
+  </nav>
   <div class="row">
     <div class="col-sm-12">
 

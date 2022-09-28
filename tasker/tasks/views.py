@@ -95,4 +95,4 @@ def update_create_view(request, task_id):
     
     else:
         form = UpdateCreateForm()
-    return render(request, "tasks/update_form.html", {"form": form})
+    return render(request, "tasks/update_form.html", {"form": form, "task_id": task_id})
