@@ -44,7 +44,7 @@
         <ul class="timeline">
           {% for update in object.update_set.all|dictsortreversed:"created_at" %}
           <li>
-            <a target="_blank" href="https://www.totoprayogo.com/#">{{object.created_by.username}}</a>
+            <a target="_blank" href="https://www.totoprayogo.com/#">{{update.created_by.username}}</a>
             <p class="float-right">{{update.created_at}}</p>
             <p>{{update.comment}}</p>
             {% if update.file %}
