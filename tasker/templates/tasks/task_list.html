@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static  %}
+{% load static %}
 
 {% block title %}Task List{% endblock %}
 
@@ -16,44 +16,65 @@
       <form action="" method="get" class="my-3">
         {{ filter.form }}
         <input type="submit" class="btn btn-primary" />
-    </form>
+      </form>
 
 
       <ol class="list-group ">
         {% for task in object_list %}
-          {% if not task.is_private %}
-          <li class="list-group-item d-flex justify-content-between align-items-start">
-            <div class="ms-2 me-auto">
-              <div class="fw-bold"><a href="{% url 'tasks:detail' task.id %}">{{ task.name }}</a></div>
-              {% if task.responsible %}
-              <span class="badge bg-secondary">{{task.responsible}}</span>
-              {% endif %}
-              {{ task.description|truncatechars:50 }}
-            </div>
-            <div>
-              <a class="btn btn-primary" href="{% url 'tasks:update' task.id %}" role="button">Edit</a>
-              <a class="btn btn-primary" href="{% url 'tasks:delete' task.id %}" role="button">Delete</a>
-            </div>
-          </li>
-          {% else %}
-            {% if user.is_authenticated %}
-              {% if task.responsible == user or task.created_by == user %}
-              <li class="list-group-item d-flex justify-content-between align-items-start">
-                <div class="ms-2 me-auto">
-                  <div class="fw-bold"><a href="{% url 'tasks:detail' task.id %}">{{ task.name }}</a></div>
-                  {% if task.responsible %}
-                  <span class="badge bg-secondary">{{task.responsible}}</span>
-                  {% endif %}
-                  (hidden) {{ task.description|truncatechars:50 }}
-                </div>
-                <div>
-                  <a class="btn btn-primary" href="{% url 'tasks:update' task.id %}" role="button">Edit</a>
-                  <a class="btn btn-primary" href="{% url 'tasks:delete' task.id %}" role="button">Delete</a>
-                </div>
-              </li>
-              {% endif %}
+        {% if not task.is_private %}
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+          <div class="ms-2 me-auto">
+            <div class="fw-bold mb-2"><a href="{% url 'tasks:detail' task.id %}">{{ task.name }}</a></div>
+            <div>{{ task.description|truncatechars:50 }}</div>
+            {% if task.responsible %}
+            <span class="badge bg-secondary">{{task.responsible}}</span>
             {% endif %}
-          {% endif %}
+            <div>
+              <a href="{% url 'tasks:update' task.id %}" class="pr-2"><i class="bi bi-pencil-square "></i></a>
+              <a href="{% url 'tasks:delete' task.id %}" class="px-2"><i class="bi bi-trash3 text-danger"></i></a>
+            </div>
+
+          </div>
+          <div>
+            <div class="justify-right">
+              {% if task.update_set.count > 0 %}
+              <span class="badge bg-primary rounded-pill ">
+                {{ task.update_set.count}}
+              </span>
+              {% endif %}
+            </div>
+          </div>
+        </li>
+        {% else %}
+        {% if user.is_authenticated %}
+        {% if task.responsible == user or task.created_by == user %}
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+          <div class="ms-2 me-auto">
+            <div class="fw-bold mb-2"><a href="{% url 'tasks:detail' task.id %}">{{ task.name }}</a></div>
+            <div>{{ task.description|truncatechars:50 }}</div>
+            {% if task.responsible %}
+            <span class="badge bg-secondary">{{task.responsible}}</span>
+            {% endif %}
+            <div>
+              <a href="{% url 'tasks:update' task.id %}" class="pr-2"><i class="bi bi-pencil-square "></i></a>
+              <a href="{% url 'tasks:delete' task.id %}" class="px-2"><i class="bi bi-trash3 text-danger"></i></a>
+              <i class="bi bi-incognito"></i>
+            </div>
+
+          </div>
+          <div>
+            <div class="justify-right">
+              {% if task.update_set.count > 0 %}
+              <span class="badge bg-primary rounded-pill ">
+                {{ task.update_set.count}}
+              </span>
+              {% endif %}
+            </div>
+          </div>
+        </li>
+        {% endif %}
+        {% endif %}
+        {% endif %}
         {% endfor %}
       </ol>
 
@@ -62,6 +83,8 @@
 
     </div>
   </div>
+
+
 
 </div>
 {% endblock content %}
