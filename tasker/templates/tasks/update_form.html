@@ -11,7 +11,7 @@
 
       <h2>Create Update</h2>
 
-      <form class="form-horizontal" method="post" action="">
+      <form class="form-horizontal" method="post" enctype="multipart/form-data" action="">
         {% csrf_token %}
         {{ form|crispy }}
         <div class="control-group">

@@ -83,7 +83,7 @@ def update_create_view(request, task_id):
     task = get_object_or_404(Task, pk=task_id)
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
-        form = UpdateCreateForm(request.POST)
+        form = UpdateCreateForm(request.POST, request.FILES)
         # check whether it's valid:
         if form.is_valid():
             # process the data in form.cleaned_data as required
@@ -93,5 +93,6 @@ def update_create_view(request, task_id):
             update.save()
             return redirect('tasks:detail', id=task.pk)
     
-    form = UpdateCreateForm()
+    else:
+        form = UpdateCreateForm()
     return render(request, "tasks/update_form.html", {"form": form})

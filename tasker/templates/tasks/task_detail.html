@@ -42,6 +42,9 @@
             <a target="_blank" href="https://www.totoprayogo.com/#">{{object.created_by.username}}</a>
             <p class="float-right">{{update.created_at}}</p>
             <p>{{update.comment}}</p>
+            {% if update.file %}
+            <p class="text-muted"><small>file upload <a href="{{update.file.url}}" class="text-reset">{{update.file}}</a></small></p>
+            {% endif %}
           </li>
           {% endfor %}
         </ul>

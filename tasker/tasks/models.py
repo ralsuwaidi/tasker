@@ -1,5 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.core.exceptions import ValidationError
+
 
 
 class Task(models.Model):
@@ -77,13 +79,21 @@ class Update(models.Model):
     * TODO: multiple files
     """
 
-    file = models.FileField(_("Supporting file"), upload_to=task_directory_path, null=True, blank=True)
     comment = models.TextField(_("Comment"),
     blank=True,
     null=True,
     help_text=_("Add a comment"))
-    task = models.ForeignKey('tasks.Task', on_delete=models.CASCADE)
+    file = models.FileField(_("Supporting file"), upload_to=task_directory_path, null=True, blank=True)
 
     # auto gen field
     created_at = models.DateTimeField(auto_now_add=True)
-    created_by = models.ForeignKey('users.User', on_delete=models.CASCADE,)
+    created_by = models.ForeignKey('users.User', on_delete=models.CASCADE)
+    task = models.ForeignKey('tasks.Task', on_delete=models.CASCADE)
+
+    def clean(self):
+        """
+        Ensure that one of the fields are filled
+        """
+        print("file is ", self.file)
+        if not self.comment and not self.file:
+            raise ValidationError(_("You must fill at least one."), code='invalid')
