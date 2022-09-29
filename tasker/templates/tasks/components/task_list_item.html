@@ -3,9 +3,14 @@
         <div class="fw-bold mb-2"><a href="{% url 'tasks:detail' task.id %}">{{ task.name }}</a></div>
         <div>{{ task.description|truncatechars:50 }}</div>
         {% if task.responsible %}
-            <span class="badge bg-secondary">{{task.responsible}}</span>
+            <span class="badge bg-secondary"><small>{{task.responsible}}</small></span>
         {% endif %}
-        <span class="badge bg-secondary">{{task.get_task_stage_display}}</span>
+        <span class="badge bg-secondary"><small>{{task.get_task_stage_display}}</small></span>
+        {% if task.task_stage != "CO" %}
+            {% if task.deadline %}
+                <p class="text-muted"><small>{{task.deadline}}</small></p>
+            {% endif %}
+        {% endif %}
 
         <div>
             <a href="{% url 'tasks:update' task.id %}" class="pr-2"><i class="bi bi-pencil-square "></i></a>
@@ -13,6 +18,7 @@
             {% if hidden %}
                 <i class="bi bi-incognito"></i>
             {% endif %}
+
         </div>
 
     </div>
