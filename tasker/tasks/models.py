@@ -71,7 +71,7 @@ class Task(models.Model):
         return related_updates
 
     @property
-    def time_spent_total(self):
+    def time_spent(self):
 
         time_spent = 0
 

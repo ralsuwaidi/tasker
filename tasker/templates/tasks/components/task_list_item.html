@@ -6,6 +6,9 @@
             <span class="badge bg-secondary"><small>{{task.responsible}}</small></span>
         {% endif %}
         <span class="badge bg-secondary"><small>{{task.get_task_stage_display}}</small></span>
+        {% if task.time_spent > 0 %}
+        <span class="badge bg-secondary"><small>{{task.time_spent}} hours</small></span>
+        {% endif %}
         {% if task.task_stage != "CO" %}
             {% if task.deadline %}
                 <p class="text-muted"><small>{{task.deadline}}</small></p>
