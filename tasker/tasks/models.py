@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
 from django.apps import apps
+from django.utils import timezone
 
 
 class Task(models.Model):
@@ -81,6 +82,12 @@ class Task(models.Model):
                 time_spent += update.time_spent
 
         return time_spent
+
+    @property
+    def is_late(self):
+        if timezone.localtime().date() > self.deadline:
+            return True
+        return False
 
 
 def task_directory_path(instance, filename):

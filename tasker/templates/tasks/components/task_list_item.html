@@ -11,7 +11,12 @@
         {% endif %}
         {% if task.task_stage != "CO" %}
             {% if task.deadline %}
+            {% if task.is_late %}
+            <p class="text-danger"><small>{{task.deadline}}</small></p>
+
+            {% else %}
                 <p class="text-muted"><small>{{task.deadline}}</small></p>
+                {% endif %}
             {% endif %}
         {% endif %}
 
