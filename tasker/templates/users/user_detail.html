@@ -36,16 +36,7 @@
 
   <ol class="list-group mt-3">
     {% for task in object.task_responsible.all %}
-    <li class="list-group-item d-flex justify-content-between align-items-start">
-      <div class="ms-2 me-auto">
-        <div class="fw-bold"><a href="{% url 'tasks:detail' task.id %}">{{ task.name }}</a></div>
-        {{ task.description|truncatechars:50 }}
-      </div>
-      <div>
-        <a class="btn btn-primary" href="{% url 'tasks:update' task.id %}" role="button">Edit</a>
-        <a class="btn btn-primary" href="{% url 'tasks:delete' task.id %}" role="button">Delete</a>
-      </div>
-    </li>
+      {% include "tasks/components/task_list_item.html" with task=task %}
     {% endfor %}
   </ol>
 
