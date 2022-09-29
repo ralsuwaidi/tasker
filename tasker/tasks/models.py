@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
-
+from django.apps import apps
 
 
 class Task(models.Model):
@@ -61,6 +61,27 @@ class Task(models.Model):
     # form auto saves current logged in user
     created_by = models.ForeignKey('users.User', on_delete=models.CASCADE, related_name="task_creator")
 
+    @property
+    def all_tasks(self):
+        """
+        return list of associated tasks
+        """
+        Update = apps.get_model('tasks', 'Update')
+        related_updates = Update.objects.filter(task=self)
+        return related_updates
+
+    @property
+    def time_spent_total(self):
+
+        time_spent = 0
+
+        related_updates = self.all_tasks
+        for update in related_updates:
+            if update.time_spent:
+                time_spent += update.time_spent
+
+        return time_spent
+
 
 def task_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
@@ -84,16 +105,26 @@ class Update(models.Model):
     null=True,
     help_text=_("Add a comment"))
     file = models.FileField(_("Supporting file"), upload_to=task_directory_path, null=True, blank=True)
+    time_spent = models.FloatField(_("Time spent (Hours)"), null=True, blank=True)
 
     # auto gen field
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey('users.User', on_delete=models.CASCADE)
     task = models.ForeignKey('tasks.Task', on_delete=models.CASCADE)
 
+    @property
+    def time_spent_display(self):
+        if self.time_spent:
+            return f'{self.time_spent} Hours'
+        return None
+
     def clean(self):
         """
-        Ensure that one of the fields are filled
+        Ensure forms are filled properly
         """
-        print("file is ", self.file)
-        if not self.comment and not self.file:
-            raise ValidationError(_("You must fill at least one."), code='invalid')
+        if not self.time_spent:
+            if not self.comment and not self.file:
+                raise ValidationError(_("You must fill at least one."), code='invalid')
+
+        elif self.time_spent and not self.comment:
+            raise ValidationError(_("Please add a comment too."), code='invalid')

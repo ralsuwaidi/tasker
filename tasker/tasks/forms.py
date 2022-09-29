@@ -10,4 +10,4 @@ class TaskCreateForm(ModelForm):
 class UpdateCreateForm(ModelForm):
     class Meta:
         model = Update
-        fields = ['file', 'comment']
+        fields = ['comment', 'file', 'time_spent']

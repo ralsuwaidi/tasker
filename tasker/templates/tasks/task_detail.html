@@ -29,6 +29,7 @@
         <li class="list-group-item">Deadline: There is no deadline</li>
         {% endif %}
         <li class="list-group-item">Created by: {{ object.created_by }}</li>
+        <li class="list-group-item">Task time spent: {{object.time_spent_total}}</li>
       </ul>
     </div>
 
@@ -44,11 +45,14 @@
         <ul class="timeline">
           {% for update in object.update_set.all|dictsortreversed:"created_at" %}
           <li>
-            <a target="_blank" href="https://www.totoprayogo.com/#">{{update.created_by.username}}</a>
+            <a target="_blank" href="{% url 'users:detail' update.created_by.pk %}">{{update.created_by.username}}</a>
             <p class="float-right">{{update.created_at}}</p>
             <p>{{update.comment}}</p>
             {% if update.file %}
-            <p class="text-muted"><small>file upload <a href="{{update.file.url}}" class="text-reset">{{update.file}}</a></small></p>
+              <p class="text-muted"><small>file upload <a href="{{update.file.url}}" class="text-reset">{{update.file}}</a></small></p>
+            {% endif %}
+            {% if update.time_spent %}
+              <p class="text-muted"><small>Time spent: {{update.time_spent_display}}</a></small></p>
             {% endif %}
           </li>
           {% endfor %}
