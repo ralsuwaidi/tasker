@@ -5,4 +5,5 @@ class TaskFilter(django_filters.FilterSet):
 
     class Meta:
         model = Task
-        fields = ['task_stage']
+        fields = ['task_stage', 'responsible']
+

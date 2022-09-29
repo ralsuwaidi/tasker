@@ -1,8 +1,8 @@
-from django.db import models
-from django.utils.translation import gettext_lazy as _
-from django.core.exceptions import ValidationError
 from django.apps import apps
+from django.core.exceptions import ValidationError
+from django.db import models
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
 
 class Task(models.Model):
@@ -24,11 +24,11 @@ class Task(models.Model):
     ]
 
     name = models.CharField(
-        _("name"), 
-        max_length=150, 
+        _("name"),
+        max_length=150,
         help_text=_("Name your task"))
     description = models.TextField(
-        _("description"), 
+        _("description"),
         blank=True,
         help_text=_("Describe the task"),
         max_length=1500)
@@ -55,7 +55,7 @@ class Task(models.Model):
         max_length=2,
         choices=TASK_STAGE,
         default=NEW,)
-    
+
     # auto generated fields
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -108,9 +108,9 @@ class Update(models.Model):
     """
 
     comment = models.TextField(_("Comment"),
-    blank=True,
-    null=True,
-    help_text=_("Add a comment"))
+                               blank=True,
+                               null=True,
+                               help_text=_("Add a comment"))
     file = models.FileField(_("Supporting file"), upload_to=task_directory_path, null=True, blank=True)
     time_spent = models.FloatField(_("Time spent (Hours)"), null=True, blank=True)
 
