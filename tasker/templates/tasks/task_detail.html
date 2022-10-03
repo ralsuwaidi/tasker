@@ -14,7 +14,7 @@
   <div class="row">
     <div class="col-sm-12">
 
-      <h2>Task: {{object.name}}</h2>
+      <h2>Task {{object.id}}: {{object.name}}</h2>
       <a class="btn btn-primary my-3" href="{% url 'tasks:update' object.id %}" role="button">Edit</a>
       <ul class="list-group">
         <li class="list-group-item">Name: {{ object.name }}</li>
