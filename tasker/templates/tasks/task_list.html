@@ -21,15 +21,41 @@
 
       <ol class="list-group ">
         {% for task in object_list %}
-          {% if not task.is_private %}
-            {% include "tasks/components/task_list_item.html" with task=task %}
-          {% else %}
-            {% if user.is_authenticated %}
-              {% if task.responsible == user or task.created_by == user %}
-                {% include "tasks/components/task_list_item.html" with task=task hidden=True %}
-              {% endif %}
-            {% endif %}
-          {% endif %}
+        {% if task.task_stage != "CO" %}
+
+        {% if not task.is_private %}
+        <!-- include task row  -->
+        {% include "tasks/components/task_list_item.html" with task=task %}
+        {% else %}
+        {% if user.is_authenticated %}
+        {% if task.responsible == user or task.created_by == user %}
+        <!-- include task row  -->
+        {% include "tasks/components/task_list_item.html" with task=task hidden=True %}
+        {% endif %}
+        {% endif %}
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+      </ol>
+
+      <!-- completed tasks -->
+      <h2 class="my-5">Completed</h2>
+
+      <ol class="list-group ">
+        {% for task in object_list %}
+        {% if task.task_stage == "CO" %}
+        {% if not task.is_private %}
+        <!-- include task row  -->
+        {% include "tasks/components/task_list_item.html" with task=task %}
+        {% else %}
+        {% if user.is_authenticated %}
+        {% if task.responsible == user or task.created_by == user %}
+        <!-- include task row  -->
+        {% include "tasks/components/task_list_item.html" with task=task hidden=True %}
+        {% endif %}
+        {% endif %}
+        {% endif %}
+        {% endif %}
         {% endfor %}
       </ol>
 
