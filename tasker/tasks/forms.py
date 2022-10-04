@@ -1,13 +1,17 @@
-from django.forms import ModelForm
+from django import forms
 from tasker.tasks.models import Task, Update
 
-class TaskCreateForm(ModelForm):
+class TaskCreateForm(forms.ModelForm):
     class Meta:
         model = Task
         exclude = ('created_by',)
 
 
-class UpdateCreateForm(ModelForm):
+class UpdateCreateForm(forms.ModelForm):
     class Meta:
         model = Update
         fields = ['comment', 'file', 'time_spent']
+        widgets = {
+            'file': forms.ClearableFileInput(attrs={'multiple': True}),
+        }
+

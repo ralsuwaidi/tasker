@@ -8,7 +8,7 @@ from django_filters.views import FilterView
 from tasker.tasks.forms import TaskCreateForm, UpdateCreateForm
 
 from .filters import TaskFilter
-from .models import Task
+from .models import Task, Update
 
 
 class TaskListView(FilterView):
@@ -84,13 +84,25 @@ def update_create_view(request, task_id):
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
         form = UpdateCreateForm(request.POST, request.FILES)
+        files = request.FILES.getlist('file')
         # check whether it's valid:
         if form.is_valid():
             # process the data in form.cleaned_data as required
-            update = form.save(commit=False)
-            update.created_by = request.user
-            update.task = task
-            update.save()
+            if len(files) <= 1:
+                update = form.save(commit=False)
+                update.created_by = request.user
+                update.task = task
+                update.save()
+            else:
+                # loop over every file and save it manually
+                for file in files:
+                    print('form', form)
+                    update = Update()
+                    update.comment = form['comment'].value()
+                    update.created_by = request.user
+                    update.task = task
+                    update.file = file
+                    update.save()
             return redirect('tasks:detail', id=task.pk)
     
     else:
