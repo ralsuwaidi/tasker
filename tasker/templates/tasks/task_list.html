@@ -1,67 +1,66 @@
-{% extends "base.html" %}
+{% extends "tasks/base.html" %}
 {% load static %}
 
 {% block title %}Task List{% endblock %}
 
-{% block content %}
-<div class="container mb-3">
+{% block page_title %}
+Task List
+{% endblock %}
 
-  <div class="row">
-    <div class="col-sm-12">
+{% block inner %}
 
-      <h2>Task List</h2>
-
-      <a class="btn btn-primary my-3" href="{% url 'tasks:create' %}" role="button">Create</a>
+<!-- <a class="btn btn-primary my-3" href="{% url 'tasks:create' %}" role="button">Create</a>
 
       <form action="" method="get" class="my-3">
         {{ filter.form }}
         <input type="submit" class="btn btn-primary" />
-      </form>
+      </form> -->
+
+<div class="mt-8">
+
+  {% for task in object_list %}
+  {% if task.task_stage != "CO" %}
+
+  {% if not task.is_private %}
+  <!-- include task row  -->
+  {% include "tasks/components/task_list_item.html" with task=task %}
+  {% else %}
+  {% if user.is_authenticated %}
+  {% if task.responsible == user or task.created_by == user %}
+  <!-- include task row  -->
+  {% include "tasks/components/task_list_item.html" with task=task hidden=True %}
+  {% endif %}
+  {% endif %}
+  {% endif %}
+  {% endif %}
+  {% endfor %}
 
 
-        {% for task in object_list %}
-        {% if task.task_stage != "CO" %}
+  
 
-        {% if not task.is_private %}
-        <!-- include task row  -->
-        {% include "tasks/components/task_list_item.html" with task=task %}
-        {% else %}
-        {% if user.is_authenticated %}
-        {% if task.responsible == user or task.created_by == user %}
-        <!-- include task row  -->
-        {% include "tasks/components/task_list_item.html" with task=task hidden=True %}
-        {% endif %}
-        {% endif %}
-        {% endif %}
-        {% endif %}
-        {% endfor %}
-
-      <!-- completed tasks -->
-      <h2 class="my-5">Completed</h2>
-
-        {% for task in object_list %}
-        {% if task.task_stage == "CO" %}
-        {% if not task.is_private %}
-        <!-- include task row  -->
-        {% include "tasks/components/task_list_item.html" with task=task %}
-        {% else %}
-        {% if user.is_authenticated %}
-        {% if task.responsible == user or task.created_by == user %}
-        <!-- include task row  -->
-        {% include "tasks/components/task_list_item.html" with task=task hidden=True %}
-        {% endif %}
-        {% endif %}
-        {% endif %}
-        {% endif %}
-        {% endfor %}
-
-
-
-
+  <div class="flex mt-10 mb-8">
+    <div class="rounded text-default rounded-md bg-green px-2">
+        <p>Completed</p>
     </div>
-  </div>
+</div>
 
+  {% for task in object_list %}
+  {% if task.task_stage == "CO" %}
+  {% if not task.is_private %}
+  <!-- include task row  -->
+  {% include "tasks/components/task_list_item.html" with task=task %}
+  {% else %}
+  {% if user.is_authenticated %}
+  {% if task.responsible == user or task.created_by == user %}
+  <!-- include task row  -->
+  {% include "tasks/components/task_list_item.html" with task=task hidden=True %}
+  {% endif %}
+  {% endif %}
+  {% endif %}
+  {% endif %}
+  {% endfor %}
 
 
 </div>
-{% endblock content %}
+
+{% endblock %}

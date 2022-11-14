@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{%   block content  %}
+
+<div class="mx-8 ">
+
+    <div class="mt-14">
+        <p class="text-4xl text-default font-bold">
+            {% block page_title %}
+            Page Title
+            {% endblock %}
+        </p>
+    </div>
+
+    {% block inner %}
+    {% endblock %}
+
+</div >
+
+{% endblock %}
