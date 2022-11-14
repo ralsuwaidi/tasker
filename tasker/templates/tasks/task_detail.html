@@ -12,6 +12,7 @@
 
 
 
+
   <!-- <a class="btn btn-primary my-3" href="{% url 'tasks:update' object.id %}" role="button">Edit</a> -->
 
   <div class="flex ">
@@ -19,12 +20,12 @@
       <p class="text-gray">Responsible</p>
     </div>
     <div>
-  {% if object.responsible %}
-  <p class="text-default bg-yellow px-2 rounded rounded-md">{{ object.responsible }}</p>
-  {% else %}
-  <p class="text-gray ">{{ object.responsible }}</p>
-  {% endif %}
-</div>
+      {% if object.responsible %}
+      <p class="text-default bg-yellow px-2 rounded rounded-md">{{ object.responsible }}</p>
+      {% else %}
+      <p class="text-gray ">{{ object.responsible }}</p>
+      {% endif %}
+    </div>
   </div>
 
   <!-- <div class="flex mt-6">
@@ -63,7 +64,9 @@
       <p class="text-gray">Created</p>
     </div>
     <div>
-      <a href="{% url 'users:detail' object.created_by.username  %}"><p class="text-default underline"> {{ object.created_by }} </p></a>
+      <a href="{% url 'users:detail' object.created_by.username  %}">
+        <p class="text-default underline"> {{ object.created_by }} </p>
+      </a>
     </div>
   </div>
 
@@ -89,7 +92,12 @@
 
   <hr class="bg-gray mt-5 mb-8" />
 
-  <a class="rounded rounded-sm bg-blue-500 text-white p-2 " href="{% url 'tasks:update_create' object.id %}" role="button">Add Update</a>
+  <div class="flex">
+
+    <a class="rounded rounded-sm bg-blue-500 text-white p-2 " href="{% url 'tasks:update' object.id %}">Edit Task</a>
+
+    <a class="rounded rounded-sm bg-blue-500 text-white p-2 ml-3" href="{% url 'tasks:update_create' object.id %}">Add Update</a>
+  </div>
 
   {% if object.update_set.count > 0 %}
 
