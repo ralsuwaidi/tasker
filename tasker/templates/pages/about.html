@@ -1,1 +1,59 @@
-{% extends "base.html" %}
+{% extends "pages/base.html" %}
+
+{% block page_title %}
+Task List
+{% endblock %}
+
+
+{% block inner %}
+
+<div class="mt-8">
+
+    <div class="flex">
+        <div class="rounded text-default rounded-md bg-green px-2">
+            <p>Now</p>
+        </div>
+        <div class="ml-4 text-gray">
+            <p>2</p>
+        </div>
+        <div class="ml-4 text-gray">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM18.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+              </svg>
+        </div>
+    </div>
+
+
+    <div class="mt-6">
+
+        
+        {% include 'pages/common/list_item.html' with title='This is another test' priority='🔥 High' date='Apr 3' %}
+        {% include 'pages/common/list_item.html' with title='What can we do about this' priority='🔥 High' date='Apr 3' %}
+        {% include 'pages/common/list_item.html' with title='What is this' priority='🔥 High' date='Apr 3' %}
+
+
+    </div>
+
+    <div class="flex my-10">
+        <div class="rounded text-default rounded-md bg-yellow px-2">
+            <p>Now</p>
+        </div>
+        <div class="ml-4 text-gray">
+            <p>2</p>
+        </div>
+        <div class="ml-4 text-gray">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM18.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+              </svg>
+        </div>
+    </div>
+
+    <div>
+        {% include 'pages/common/list_item.html' with title='What is this' priority='🔥 High' date='Apr 3' %}
+        {% include 'pages/common/list_item.html' with title='What is this' priority='🔥 High' date='Apr 3' %}
+        {% include 'pages/common/list_item.html' with title='What is this' priority='🔥 High' date='Apr 3' %}
+    </div>
+
+</div>
+
+{% endblock inner %}

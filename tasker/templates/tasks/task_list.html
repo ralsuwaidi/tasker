@@ -19,7 +19,6 @@
       </form>
 
 
-      <ol class="list-group ">
         {% for task in object_list %}
         {% if task.task_stage != "CO" %}
 
@@ -36,12 +35,10 @@
         {% endif %}
         {% endif %}
         {% endfor %}
-      </ol>
 
       <!-- completed tasks -->
       <h2 class="my-5">Completed</h2>
 
-      <ol class="list-group ">
         {% for task in object_list %}
         {% if task.task_stage == "CO" %}
         {% if not task.is_private %}
@@ -57,7 +54,6 @@
         {% endif %}
         {% endif %}
         {% endfor %}
-      </ol>
 
 
 

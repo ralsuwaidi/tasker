@@ -1,21 +1,20 @@
-{% extends "base.html" %}
+{% extends "pages/base.html" %}
+
+{% block page_title %}
+Page Titles
+{% endblock page_title %}
+
+{%   block inner  %}
 
 
-{%   block content  %}
 
-<div class="mx-8 ">
-
-    <div class="mt-14">
-        <p class="text-4xl  font-bold">This is a Task Name</p>
-    </div>
-    <!-- start metadata -->
     <div class="mt-8">
         <div class="flex ">
             <div class="w-28">
                 <p class="text-gray">Urgency</p>
             </div>
             <div>
-                <p class="text-default bg-yellow p-0.5 px-2 rounded rounded-md">Next</p>
+                <p class="text-default bg-yellow px-2 rounded rounded-md">Next</p>
             </div>
         </div>
 
@@ -24,7 +23,7 @@
                 <p class="text-gray">Priority</p>
             </div>
             <div>
-                <p class="text-default bg-red p-0.5 px-2 rounded rounded-md">🔥 High</p>
+                <p class="text-default bg-red px-2 rounded rounded-md">🔥 High</p>
             </div>
         </div>
 
@@ -86,6 +85,5 @@
 
     </div>
     <!-- end metadata -->
-</div>
 
 {% endblock %}

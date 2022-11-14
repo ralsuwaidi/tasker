@@ -1,42 +1,38 @@
-<li class="list-group-item d-flex justify-content-between align-items-start">
-    <div class="ms-2 me-auto">
-        <div class="fw-bold mb-2"><a href="{% url 'tasks:detail' task.id %}">{{task.id}}: {{ task.name }}</a></div>
-        <div>{{ task.description|truncatechars:50 }}</div>
-        {% if task.responsible %}
-            <span class="badge bg-secondary"><small>{{task.responsible}}</small></span>
-        {% endif %}
-        <span class="badge bg-secondary"><small>{{task.get_task_stage_display}}</small></span>
-        {% if task.time_spent > 0 %}
-        <span class="badge bg-secondary"><small>{{task.time_spent}} hours</small></span>
-        {% endif %}
+<div>
+    <a href="{% url 'tasks:detail' task.id %}" class="">
+        <p class="text-2xl text-default">{{task.id}}: {{ task.name }}</p>
+    </a>
+    <div class="flex mt-1">
+        <!-- <p class="text-default bg-red  px-2 rounded rounded-md">{{ priority }}</p> -->
+
         {% if task.task_stage != "CO" %}
             {% if task.deadline %}
-            {% if task.is_late %}
-            <p class="text-danger"><small>{{task.deadline}}</small></p>
+                {% if task.is_late %}
+                <p class="ml-4 text-red">{{ task.deadline }}</p>
 
-            {% else %}
-                <p class="text-muted"><small>{{task.deadline}}</small></p>
+                {% else %}
+                <p class="ml-4 text-gray">{{ task.deadline }}</p>
                 {% endif %}
             {% endif %}
         {% endif %}
 
-        <div>
-            <a href="{% url 'tasks:update' task.id %}" class="pr-2"><i class="bi bi-pencil-square "></i></a>
-            <a href="{% url 'tasks:delete' task.id %}" class="px-2"><i class="bi bi-trash3 text-danger"></i></a>
-            {% if hidden %}
-                <i class="bi bi-incognito"></i>
-            {% endif %}
+        {% if task.responsible %}
+            <p class="ml-4 text-gray">{{task.responsible}}</p>
+        {% endif %}
+        <p class="ml-4 text-gray">{{task.get_task_stage_display}}</p>
 
-        </div>
+        {% if hidden %}
+            <p class="ml-4 text-gray">&#128065;</p>
+        {% endif %}
+
+
+        {% if task.update_set.count > 0 %}
+            <p class="ml-4 text-gray">💬</p>
+        {% endif %}
 
     </div>
-    <div>
-        <div class="justify-right">
-            {% if task.update_set.count > 0 %}
-            <span class="badge bg-primary rounded-pill ">
-                {{ task.update_set.count}}
-            </span>
-            {% endif %}
-        </div>
-    </div>
-</li>
+
+
+
+    <hr class="bg-gray my-4" />
+</div>
