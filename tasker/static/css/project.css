@@ -42,3 +42,79 @@ ul.timeline > li:before {
   height: 20px;
   z-index: 400;
 }
+
+
+/* Color style  */
+
+.bg-defualt {
+  background-color: #FFFFFF;
+}
+
+.bg-gray {
+  background-color: #EBECED;
+}
+
+.bg-orange {
+  background-color: #FAEBDD;
+}
+
+.bg-yellow {
+  background-color: #FBF3DB;
+}
+
+.bg-green {
+  background-color: #DDEDEA;
+}
+
+.bg-blue {
+  background-color: #DDEBF1;
+}
+
+.bg-purple {
+  background-color: #EAE4F2;
+}
+
+.bg-pink {
+  background-color: #F4DFEB;
+}
+
+.bg-red {
+  background-color: #FBE4E4;
+}
+
+.text-default {
+  color: #37352F;
+}
+
+.text-gray {
+  color: #9B9A97;
+}
+
+.text-blue {
+  color: #0B6E99;
+}
+
+.text-green {
+  color: #0F7B6C;
+}
+
+.text-purple {
+  color: #6940A5;
+}
+
+.text-red {
+  color: #E03E3E;
+}
+
+.text-pink {
+  color: #AD1A72;
+}
+
+.text-yellow {
+  color: #DFAB01;
+}
+
+.text-orange {
+  color: #D9730D;
+}
+
