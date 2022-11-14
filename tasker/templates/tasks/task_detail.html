@@ -1,72 +1,148 @@
-{% extends "base.html" %}
+{% extends "tasks/base.html" %}
 {% load static %}
 
 {% block title %}Task List{% endblock %}
 
-{% block content %}
-<div class="container mb-3">
-  <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="{% url 'tasks:list' %}">Tasks</a></li>
-      <li class="breadcrumb-item active" aria-current="page">Task</li>
-    </ol>
-  </nav>
-  <div class="row">
-    <div class="col-sm-12">
+{% block page_title %}
+{{object.name}}
+{% endblock %}
 
-      <h2>Task {{object.id}}: {{object.name}}</h2>
-      <a class="btn btn-primary my-3" href="{% url 'tasks:update' object.id %}" role="button">Edit</a>
-      <ul class="list-group">
-        <li class="list-group-item">Name: {{ object.name }}</li>
-        <li class="list-group-item">{{ object.description|linebreaks }}</li>
-        {% if object.responsible %}
-        <li class="list-group-item">Assigned to: {{ object.responsible }}</li>
-        {% endif %}
-        <li class="list-group-item">Completed: {{ object.is_completed }}</li>
-        {% if object.deadline %}
-        <li class="list-group-item">Deadline: {{ object.deadline }}</li>
-        {% else %}
-        <li class="list-group-item">Deadline: There is no deadline</li>
-        {% endif %}
-        <li class="list-group-item">Created by: {{ object.created_by }}</li>
-        <li class="list-group-item">Task time spent: {{object.time_spent}} hours</li>
-      </ul>
+{% block inner %}
+<div class="mt-8">
+
+
+
+  <!-- <a class="btn btn-primary my-3" href="{% url 'tasks:update' object.id %}" role="button">Edit</a> -->
+
+  <div class="flex ">
+    <div class="w-32">
+      <p class="text-gray">Responsible</p>
     </div>
-
+    <div>
+      <p class="text-default bg-yellow px-2 rounded rounded-md">{{ object.responsible }}</p>
+    </div>
   </div>
 
-  <a class="btn btn-primary my-3" href="{% url 'tasks:update_create' object.id %}" role="button">Add Update</a>
+  <div class="flex mt-6">
+    <div class="w-32">
+      <p class="text-gray">Priority</p>
+    </div>
+    <div>
+      <p class="text-default bg-red px-2 rounded rounded-md">🔥 High</p>
+    </div>
+  </div>
+
+
+
+  <div class="flex mt-6">
+    <div class="w-32">
+      <p class="text-gray">Completed</p>
+    </div>
+    <div>
+      {% if object.is_completed %}
+      <p class="text-default">✔️ </p>
+      {% else %}
+      <p class="text-default">✕ </p>
+      {% endif %}
+    </div>
+  </div>
+
+
+  <div class="flex mt-6">
+    <div class="w-32">
+      <p class="text-gray">Deadline</p>
+    </div>
+    <div>
+      <p class="text-default"> {{ object.deadline }} </p>
+    </div>
+  </div>
+
+  <div class="flex mt-6">
+    <div class="w-32">
+      <p class="text-gray">Created</p>
+    </div>
+    <div>
+      <p class="text-default"> {{ object.created_by }} </p>
+    </div>
+  </div>
+
+  <div class="flex mt-6">
+    <div class="w-32">
+      <p class="text-gray">Time Spent</p>
+    </div>
+    <div>
+      <p class="text-default"> {{object.time_spent}} hours </p>
+    </div>
+  </div>
+
+
+  <hr class="bg-gray my-5" />
+
+  <div>
+    <p class="text-default">
+      {{ object.description|linebreaks }}
+    </p>
+  </div>
+
+  <hr class="bg-gray mt-5 mb-8" />
+
+  <a class="rounded rounded-sm bg-blue-500 text-white p-2 " href="{% url 'tasks:update_create' object.id %}" role="button">Add Update</a>
 
   {% if object.update_set.count > 0 %}
-  <div class=" mt-2 mb-5">
-    <div class="row">
-      <div class="col-md-6">
-        <h4>Updates</h4>
-        <ul class="timeline">
-          {% for update in object.update_set.all|dictsortreversed:"created_at" %}
-          <li>
-            <a target="_blank" href="{% url 'users:detail' update.created_by.pk %}">{{update.created_by.username}}</a>
-            <p class="float-right">{{update.created_at}}</p>
-            <p>{{update.comment}}</p>
-            {% if update.file %}
-              <p class="text-muted"><small>file upload <a href="{{update.file.url}}" class="text-reset">{{update.file}}</a></small></p>
-            {% endif %}
-            {% if update.time_spent %}
-              <p class="text-muted"><small>Time spent: {{update.time_spent_display}}</a></small></p>
-            {% endif %}
-          </li>
-          {% endfor %}
-        </ul>
-      </div>
-    </div>
+
+  <!-- <p class=" text-3xl text-default mb-10 mt-8 font-bold">Timeline</p> -->
+
+
+
+  <div class="mt-10 mb-16">
+    <ol class="relative border-l border-gray-200 dark:border-gray-700">
+      {% for update in object.update_set.all|dictsortreversed:"created_at" %}
+
+      <li class="mb-10 ml-4">
+        <div
+          class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -left-1.5 border border-white dark:border-gray-900 dark:bg-gray-700">
+        </div>
+        <time
+          class="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">{{update.created_by.username}}
+          {{update.created_at}}</time>
+
+
+
+        {% if update.file %}
+        <!-- <p class="text-muted"><small>file upload <a href="{{update.file.url}}" class="text-reset">{{update.file}}</a></small></p> -->
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">File upload</h3>
+        {% endif %}
+        {% if update.time_spent %}
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Time spent: {{update.time_spent_display}}</h3>
+        {% endif %}
+
+        {% if not update.file and not update.time_spent %}
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Comment Added</h3>
+        {% endif %}
+
+        <p class="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">{{update.comment}}</p>
+
+        {% if update.file %}
+        <a href="{{update.file.url}}"
+          class="inline-flex items-center py-2 px-4 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-200 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">{{update.file}}
+          <svg class="ml-2 w-3 h-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
+              d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+              clip-rule="evenodd"></path>
+          </svg></a>
+        {% endif %}
+
+      </li>
+
+      {% endfor %}
+    </ol>
   </div>
+
   {% endif %}
 
 
-  </div>
+</div>
 
 
 
-{% endblock content %}
-
-
+{% endblock inner %}
