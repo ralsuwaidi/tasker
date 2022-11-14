@@ -19,33 +19,34 @@
       <p class="text-gray">Responsible</p>
     </div>
     <div>
-      <p class="text-default bg-yellow px-2 rounded rounded-md">{{ object.responsible }}</p>
-    </div>
+  {% if object.responsible %}
+  <p class="text-default bg-yellow px-2 rounded rounded-md">{{ object.responsible }}</p>
+  {% else %}
+  <p class="text-gray ">{{ object.responsible }}</p>
+  {% endif %}
+</div>
   </div>
 
-  <div class="flex mt-6">
+  <!-- <div class="flex mt-6">
     <div class="w-32">
       <p class="text-gray">Priority</p>
     </div>
     <div>
       <p class="text-default bg-red px-2 rounded rounded-md">🔥 High</p>
     </div>
-  </div>
+  </div> -->
 
 
-
+  {% if object.is_completed %}
   <div class="flex mt-6">
     <div class="w-32">
       <p class="text-gray">Completed</p>
     </div>
     <div>
-      {% if object.is_completed %}
       <p class="text-default">✔️ </p>
-      {% else %}
-      <p class="text-default">✕ </p>
-      {% endif %}
     </div>
   </div>
+  {% endif %}
 
 
   <div class="flex mt-6">
@@ -53,7 +54,7 @@
       <p class="text-gray">Deadline</p>
     </div>
     <div>
-      <p class="text-default"> {{ object.deadline }} </p>
+      <p class="text-gray"> {{ object.deadline }} </p>
     </div>
   </div>
 
@@ -62,10 +63,11 @@
       <p class="text-gray">Created</p>
     </div>
     <div>
-      <p class="text-default"> {{ object.created_by }} </p>
+      <a href="{% url 'users:detail' object.created_by.username  %}"><p class="text-default underline"> {{ object.created_by }} </p></a>
     </div>
   </div>
 
+  {% if object.time_spent %}
   <div class="flex mt-6">
     <div class="w-32">
       <p class="text-gray">Time Spent</p>
@@ -74,6 +76,7 @@
       <p class="text-default"> {{object.time_spent}} hours </p>
     </div>
   </div>
+  {% endif %}
 
 
   <hr class="bg-gray my-5" />

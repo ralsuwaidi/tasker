@@ -1,33 +1,28 @@
-{% extends "base.html" %}
+{% extends "tasks/base.html" %}
 {% load crispy_forms_tags %}
 
-{% block title %}Task List{% endblock %}
+{% block title %}Create Update{% endblock %}
 
-{% block content %}
+{% block page_title %}
+Create Update
+{% endblock %}
+
+{% block inner %}
+
 <div class="container mb-3">
 
-  <div class="row">
-    <div class="col-sm-12">
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="{% url 'tasks:list' %}">Tasks</a></li>
-          <li class="breadcrumb-item"><a href="{% url 'tasks:detail' task_id %}">Task</a></li>
-          <li class="breadcrumb-item active" aria-current="page">Update</li>
-        </ol>
-      </nav>
-      <h2>Create Update</h2>
 
-      <form class="form-horizontal" method="post" enctype="multipart/form-data" action="">
-        {% csrf_token %}
-        {{ form|crispy }}
-        <div class="control-group">
-          <div class="controls">
-            <button type="submit" class="btn btn-primary">Create</button>
-          </div>
-        </div>
-      </form>
+
+  <form class="mt-8" method="post" enctype="multipart/form-data" action="">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <div class="control-group">
+      <div class="controls">
+        <button type="submit" class="rounded rounded-sm bg-blue-500 text-white p-2 mt-8 mb-10" role="button">Add Update</button>
+      </div>
     </div>
-  </div>
+  </form>
+
 
 </div>
-{% endblock content %}
+{% endblock inner %}
