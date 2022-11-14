@@ -1,44 +1,36 @@
-{% extends "base.html" %}
+{% extends "tasks/base.html" %}
 {% load static %}
 
 {% block title %}User: {{ object.username }}{% endblock %}
 
-{% block content %}
-<div class="container">
-
-  <div class="row">
-    <div class="col-sm-12">
-
-      <h2>{{ object.username }}</h2>
-      {% if object.name %}
-        <p>{{ object.name }}</p>
-      {% endif %}
-    </div>
-  </div>
-
-
-
-{% if object == request.user %}
-<!-- Action buttons -->
-<div class="row">
-
-  <div class="col-sm-12">
-    <a class="btn btn-primary" href="{% url 'users:update' %}" role="button">My Info</a>
-    <a class="btn btn-primary" href="{% url 'account_email' %}" role="button">E-Mail</a>
-    <a class="btn btn-primary" href="{% url 'tasks:create' %}" role="button">Create task</a>
-    <!-- Your Stuff: Custom user template urls -->
-  </div>
-
-</div>
-<!-- End Action buttons -->
+{% block page_title %}
+{% if object.name %}
+{{ object.name }}
+{% else %}
+{{ object.username }}
 {% endif %}
+{% endblock %}
+
+{% block inner %}
+<div class="mt-8">
 
 
-  <ol class="list-group mt-3">
+
+  <div class="flex">
+
+    <a class="rounded rounded-sm bg-blue-500 text-white p-2 " href="{% url 'tasks:create' %}" role="button">Create Task</a>
+    {% if object == request.user %}
+    <a class="rounded rounded-sm bg-blue-500 text-white p-2 ml-3" href="{% url 'users:update' %}" role="button">Edit User</a>
+    {% endif %}
+</div>
+
+  <hr class="bg-gray mt-5 mb-8" />
+
+  <ol class="">
     {% for task in object.task_responsible.all %}
       {% include "tasks/components/task_list_item.html" with task=task %}
     {% endfor %}
   </ol>
 
 </div>
-{% endblock content %}
+{% endblock inner %}

@@ -1,28 +1,24 @@
-{% extends "base.html" %}
+{% extends "tasks/base.html" %}
 {% load crispy_forms_tags %}
 
 {% block title %}Task List{% endblock %}
 
-{% block content %}
-<div class="container mb-3">
+{% block page_title %}
+Create Task
+{% endblock %}
 
-  <div class="row">
-    <div class="col-sm-12">
+{% block inner %}
 
-      <h2>Create Task</h2>
 
-      <form class="form-horizontal" method="post" action="">
+      <form class="form-horizontal mt-8 mb-10" method="post" action="">
         {% csrf_token %}
         {{ form|crispy }}
         <div class="control-group">
           <div class="controls">
-            <button type="submit" class="btn btn-primary">Create</button>
-          </div>
+    <button class="rounded rounded-md bg-blue-500 text-white p-2 mt-8" type="submit" role="button">Create</button>
+  </div>
         </div>
       </form>
  
-    </div>
-  </div>
 
-</div>
-{% endblock content %}
+{% endblock inner %}
