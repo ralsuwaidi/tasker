@@ -9,9 +9,9 @@ Task List
 
 {% block inner %}
 
-<!-- <a class="btn btn-primary my-3" href="{% url 'tasks:create' %}" role="button">Create</a>
+<a class="btn btn-primary my-3" href="{% url 'tasks:create' %}" role="button">Create</a>
 
-      <form action="" method="get" class="my-3">
+      <!-- <form action="" method="get" class="my-3">
         {{ filter.form }}
         <input type="submit" class="btn btn-primary" />
       </form> -->
@@ -19,8 +19,38 @@ Task List
 
 <div class="mt-8">
 
-  <div class="my-8">
-    <a class="rounded rounded-sm bg-blue-500 text-white p-2" href="{% url 'tasks:create' %}">Create Task</a>
+  <div class="my-8 flex justify-between">
+    <a class="text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-sm px-4 py-1 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" href="{% url 'tasks:create' %}">Create Task</a>
+
+    <div class="flex">
+
+      <button id="dropdownDefault" data-dropdown-toggle="dropdown" class="text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-sm px-4 py-1 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">Stage <svg class="ml-2 w-4 h-4" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
+      <!-- Dropdown menu -->
+      <div id="dropdown" class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700">
+          <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefault">
+            <li>
+              <a href="/tasks" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">All</a>
+            </li>
+            <li>
+              <a href="?task_stage=NW" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">New</a>
+            </li>
+            <li>
+              <a href="?task_stage=QU" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">In Que</a>
+            </li>
+            <li>
+              <a href="?task_stage=PR" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">In Progress</a>
+            </li>
+            <li>
+              <a href="?task_stage=RE" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Under Review</a>
+            </li>
+            <li>
+              <a href="?task_stage=CO" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Completed</a>
+            </li>
+          </ul>
+      </div>
+      
+      
+    </div>
   </div>
 
 
