@@ -103,8 +103,6 @@
 
   <!-- <p class=" text-3xl text-default mb-10 mt-8 font-bold">Timeline</p> -->
 
-
-
   <div class="mt-10 mb-16">
     <ol class="relative border-l border-gray-200 dark:border-gray-700">
       {% for update in object.update_set.all|dictsortreversed:"created_at" %}
